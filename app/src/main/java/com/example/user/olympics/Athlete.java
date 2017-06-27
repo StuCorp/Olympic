@@ -16,7 +16,7 @@ public abstract class Athlete {
         prepare();
         compete();
         int total = calculate();
-        return award(total);
+        return Medal.medalType(total);
     }
 
     public void prepare() {
@@ -27,30 +27,13 @@ public abstract class Athlete {
         System.out.println("I am competing HARD! Grrrr");
     }
 
-    public String award(int total) {
+    abstract int calculate();
 
-        String medal = "";
-        if (total >= 15) {
-            medal = "Gold";
-        } else if (total >= 10) {
-            medal = "Silver";
-        } else if (total >= 5) {
-            medal = "Bronze";
-        } else {
-            medal = "Nothing. Loooossseerrr.";
-        }
-
-        System.out.println(String.format("I won %s", medal));
-        return String.format("I won %s", medal);
+    public void logRun(int distance){
+        log.logRun(distance);
     }
 
-    public int calculate() {
-        return 0;
-    }
-
-    public void goRun(int distance){
-        log.addRun(distance);
-    }
+    public void logTotal() { log.logTotal();}
 
     public int currentSession(){
         return log.getLastSession();

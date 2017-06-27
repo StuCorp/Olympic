@@ -14,29 +14,32 @@ import java.util.ArrayList;
 
 public class FileLogger implements Loggable {
 
+    int totalRuns = 1;
 
-    public void saveSession(Integer lastSession) throws IOException {
+    public void logSession(Integer lastSession) throws IOException {
         PrintWriter printWriter = new PrintWriter(new FileOutputStream(new File("file.txt"),true));
-        printWriter.println(String.format("Session 1) %d", lastSession));
+        printWriter.println(String.format("Session %d) %d", totalRuns, lastSession));
+        printWriter.close();
+        totalRuns++;
+    };
+
+    public void logAllSessions(Integer allSessionsTotal) throws IOException{
+        PrintWriter printWriter = new PrintWriter(new FileOutputStream(new File("file.txt"),true));
+        printWriter.println();
+        printWriter.println(String.format("I ran %d km over %d runs", allSessionsTotal, totalRuns));
         printWriter.close();
     };
 
-    public void saveAllSessions(Integer allSessionsTotal) throws IOException{
-        File file = new File("file.txt");
-        PrintWriter printWriter = new PrintWriter("file.txt");
-        printWriter.println(String.format("%d", allSessionsTotal));
-        printWriter.close();
+    public static void wipe() throws IOException{
+            File file = new File("file.txt");
+            PrintWriter printWriter = new PrintWriter("file.txt");
+            printWriter.println("");
+            printWriter.close();
+
     };
-//
-//    public void wipe() throws IOException{
-//        File file = new File("file.txt");
-//        PrintWriter printWriter = new PrintWriter("file.txt");
-//        printWriter.println(String.format("%d", allSessionsTotal));
-//        printWriter.close();
-//    };
 
 
-    public void saveAsArray(ArrayList<Integer> runs){
+    public void logAsArray(ArrayList<Integer> runs){
         int iteration = 1;
         try {
             for (Integer run : runs) {

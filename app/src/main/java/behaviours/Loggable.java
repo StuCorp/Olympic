@@ -11,9 +11,10 @@ import java.util.ArrayList;
 
 public interface Loggable {
 
-    void saveSession(Integer lastSession) throws IOException;
+    void logSession(Integer lastSession) throws IOException;
 
-    void saveAllSessions(Integer allSessionsTotal) throws IOException;
+    void logAllSessions(Integer allSessionsTotal) throws IOException;
 
-    void saveAsArray(ArrayList<Integer> runs);
+    void logAsArray(ArrayList<Integer> runs);
+
 }

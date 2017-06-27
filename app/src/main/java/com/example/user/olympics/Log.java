@@ -15,19 +15,66 @@ import behaviours.Loggable;
 public class Log {
 
     private Loggable logger;
+    private ArrayList<Loggable> loggers;
     private ArrayList<Integer> runs;
 
-    public Log(Loggable logger) {
+    public Log(){
         this.runs = new ArrayList<>();
-        this.logger = logger;
+        loggers = new ArrayList<>();
     }
 
-    public void addRun(int distance) {
-        runs.add(distance);
+    public Log(Loggable logger){
+        this.runs = new ArrayList<>();
+        this.loggers = new ArrayList<>();
+        loggers.add(logger);
     }
+
+    public Log(ArrayList<Loggable> loggers) {
+        this.runs = new ArrayList<>();
+        this.loggers = loggers;
+//        this.logger = logger;
+    }
+
+    public void setLoggers(ArrayList<Loggable> loggers) {
+        this.loggers = loggers;
+    }
+
+    public void logRun(int distance) {
+
+        runs.add(distance);
+        saveCurrentSession();
+    }
+
+    public void logTotal(){
+        saveSessionsTotal();
+    }
+
+
+    public void saveCurrentSession() {
+        for (Loggable logger : loggers) {
+            try {
+                logger.logSession(getLastSession());
+            } catch (IOException ex) {
+                System.out.println("save failed");
+                System.exit(0);
+            }
+        }
+    }
+
 
     public Integer getLastSession() {
         return runs.get(runs.size() - 1);
+    }
+
+    public void saveSessionsTotal() {
+        for (Loggable logger : loggers) {
+            try {
+                logger.logAllSessions(getAllSessionsTotal());
+            } catch (IOException ex) {
+                System.out.println("total save failed");
+                System.exit(0);
+            }
+        }
     }
 
     public Integer getAllSessionsTotal() {
@@ -38,29 +85,16 @@ public class Log {
         return total;
     }
 
+
+
+    public void saveAsRunsArray() {
+        for (Loggable logger : loggers) {
+            logger.logAsArray(getArrayOfSessions());
+        }
+    }
+
     public ArrayList<Integer> getArrayOfSessions(){
         return runs;
     }
 
-    public void saveCurrentSession() {
-        try {
-            logger.saveSession(getLastSession());
-        } catch (IOException ex) {
-            System.out.println("save failed");
-            System.exit(0);
-        }
-    }
-
-    public void saveSessionsTotal() {
-        try {
-            logger.saveAllSessions(getAllSessionsTotal());
-        } catch (IOException ex) {
-            System.out.println("total save failed");
-            System.exit(0);
-        }
-    }
-
-    public void saveAsRunsArray(){
-            logger.saveAsArray(getArrayOfSessions());
-        }
-    }
+}
