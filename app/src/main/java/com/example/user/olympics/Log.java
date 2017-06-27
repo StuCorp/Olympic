@@ -38,6 +38,10 @@ public class Log {
         return total;
     }
 
+    public ArrayList<Integer> getArrayOfSessions(){
+        return runs;
+    }
+
     public void saveCurrentSession() {
         try {
             logger.saveSession(getLastSession());
@@ -55,4 +59,8 @@ public class Log {
             System.exit(0);
         }
     }
-}
+
+    public void saveAsRunsArray(){
+            logger.saveAsArray(getArrayOfSessions());
+        }
+    }

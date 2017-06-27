@@ -1,0 +1,4 @@
+Session 1) 25
+Session 2) 55
+Session 3) 25
+Session 4) 75
